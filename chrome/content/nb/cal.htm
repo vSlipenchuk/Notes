@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset='windows-1251'">
+    </head>
+    <body>
+<link rel="stylesheet" type="text/css" media="all" 
+  href="calendar-win2k-cold-1.css" title="win2k-cold-1" />
+<!-- main calendar program -->
+<script src="vcal.js"></script>
+<style>
+BODY {margin:0px}
+</style>
+
+<div id="calendar-container">
+</div>
+
+<script>
+function ShowDate(dat) {
+      var y = dat.getFullYear();
+      var m = dat.getMonth();     // integer, 0..11
+      var d = dat.getDate();      // integer, 1..31
+      d=''+d; if (d.length<2) d='0'+d;
+      m=''+(m+1); if (m.length<2) m='0'+m;
+      var str = y+'-'+m+'-'+d;
+      if (window.parent.onSetDate) window.parent.onSetDate(str);
+      //alert(str);
+      //id('caption').innerHTML=str;
+      //document.title='Календарь: '+str;
+      //id('viki').src='/nb/'+str; //+'?dt='+(new Date()+"&heads=0"); // Чтоб апдетиться -)
+}
+
+function dateChanged(calendar) {
+    // Beware that this function is called even if the end-user only
+    // changed the month/year.  In order to determine if a date was
+    // clicked you can use the dateClicked property of the calendar:
+    if (calendar.dateClicked) {
+      ShowDate(calendar.date);
+    }
+  };
+
+  Calendar.setup(
+    {
+      flat         : "calendar-container", // ID of the parent element
+      flatCallback : dateChanged           // our callback function
+    }
+  );
+
+            </script>
+    </body>
+</html>

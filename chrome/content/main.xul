@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window  id="main" onload="db.init('c:/XUL/users.sqlite');" 
+        persist="screenX screenY width height sizemode"
+        title="gearSQLite manager" width="600" height="400"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<script type="application/x-javascript" src="main.js"/>
+<script type="application/x-javascript" src="sqlite.js"/>
+<script type="application/x-javascript" src="nb.js"/>  
+
+  
+  	<menubar>
+	  <menu id="sql-help-alter-menu" label="File">
+	    <menupopup>
+              <menuseparator/>
+              <menuitem oncommand="showNB()" 
+					label="Help" 
+					value=""/>
+	      <menuitem oncommand="window.close()" 
+					label="Exit" 
+					value=""/>
+	    </menupopup>
+	  </menu>
+          <menu id="sql-help-alter-menu" label="Select">
+	    <menupopup>
+	      <menuitem oncommand="SQLiteManager.setSqlText(this.value)" 
+					label="SELECT * FROM tableName" 
+					value="SELECT * FROM tableName"/>
+	      <menuitem oncommand="SQLiteManager.setSqlText(this.value)" 
+					label="SELECT with WHERE clause" 
+					value="SELECT [ALL | DISTINCT] result FROM table-list WHERE expr"/>
+	      <menuitem oncommand="SQLiteManager.setSqlText(this.value)" 
+					label="SELECT (general)" 
+					value="SELECT [ALL | DISTINCT] result [FROM table-list] [WHERE expr] [GROUP BY expr-list] [HAVING expr] [compound-op select]* [ORDER BY sort-expr-list] [LIMIT integer [( OFFSET | , ) integer]]"/>
+	    </menupopup>
+	  </menu>
+    </menubar>
+    <toolbar>
+    <toolbarbutton oncommand="testRefresh()" 
+      image="chrome://myapp/skin/images/refresh.png"/>
+    <toolbarseparator/>
+    </toolbar>
+    <tree id = "sqlTree" selstyle="primary"
+        style="height:300px; font-size: 120%; font-weight: bold;	color: blue; padding: 6px 6px;"
+        >
+        <treecols id = "sqlCols">
+        <treecol id="col-dbStructNorm" hideheader="true" primary="true" flex="1"/>
+        </treecols>
+        <treechildren id="sqlList" context="">
+            <treeitem label="Row">
+                <treerow>
+                    <treecell label="Hello">
+                        <button></button>
+                        </treecell>
+                    </treerow>
+             </treeitem>
+        </treechildren>
+    </tree>
+    
+  <caption label="Hello World"/>
+  <button oncommand="InitDb()">Hello New Button</button>
+  <button oncommand="db.select('select * from usr')">StartUp</button>
+  
+  
+    <statusbar id="sbFull">
+    	<statusbarpanel id="sbSqliteVersion" label="" style="font-weight:bold"/>
+    	<statusbarpanel id="sbGeckoVersion" label="" style="font-weight:bold"/>
+    	<statusbarpanel id="sbExtVersion" label="" style="color:#666666"/>
+    	<statusbarpanel id="sbSharedMode" label="---" style="font-weight:bold;"/>
+    	<statusbarpanel id="sbPanel-display" label="" flex="1"/>
+    	<statusbarpanel id="sbQueryTime" label=""/>
+    </statusbar>
+    
+    <script type="application/x-javascript">
+<![CDATA[
+nbShow();
+window.close();
+]]>
+    </script>
+
+</window>

@@ -1,0 +1,1 @@
+Its just for testing XUL applications

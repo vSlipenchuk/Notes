@@ -1,0 +1,158 @@
+﻿<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://myapp/content/example3.css" type="text/css"?>
+
+
+<window id="nbWin2" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    onload="onLoadPage()"
+    persist="screenX screenY width height sizemode"
+    title="treeView exaple 2" width="600" height="400"
+    >
+
+<script type="application/x-javascript" src="vs0.js"/>
+<script type="application/x-javascript" src="sqlite.js"/>
+<script type="application/x-javascript" src="vTree0.js" />
+<script type="application/x-javascript" src="nb.js"/>
+<script type="application/x-javascript" src="nb_xul.js"/>
+<script type="application/x-javascript" src="gcls.js"/>
+<script type="application/x-javascript" src="xulForms.js"/>
+
+<script>
+
+function nbOpenNewWindow() {
+//alert("I am here! LoadedN="+nb.N); // nb is a global variable
+var par={};
+par.db = db; // MyDefaultDatabase
+par.tbl='nb'; // My Table in it
+par.N=nb.N; // First Element = Load This Document
+par.ok=0;
+par.nb = nb;
+//alert('showNB='+par);
+var w = window.openDialog("chrome://myapp/content/nb_note.xul",
+      "Notabene: N="+nb.N,
+      "chrome, resizable, centerscreen, dialog",
+      par);
+//alert("MyWindow="+w);
+//alert("title="+w.title);
+//alert("nbText="+w.document.getElementById("nbText"));
+//alert("par.window="+par.win);
+//par.win.title="Hello";
+}
+
+</script>
+
+<keyset>
+<key keycode="VK_F2" oncommand="nbSave()"/>
+<key keycode="S"  modifiers="control"  oncommand="nbSave()" />
+<key keycode="VK_F9" oncommand="nbOpenNewWindow()"/>
+
+<key keycode="VK_F5" oncommand="nbRefresh()"/>
+<key keycode="r"  modifiers="control" oncommand="nbRefresh()"/>
+<key id="pageSwap" keycode="VK_F8"  oncommand="nbSwapPages()"/>
+</keyset>
+
+<popup id="treePopUp">
+<menuitem id="nbAddCh" label="Add child value" oncommand="nb.AddChild()" image="image uri" tooltiptext="Add a child"/>
+<menuitem  label="Rename this item" oncommand="nbRename()" image="image uri" tooltiptext="Rename me..."/>
+<menuseparator/>
+<menuitem  label="Cut (for move)" oncommand="nbCat()" image="image uri" tooltiptext="Cut for remove"/>
+<menuitem  label="Paste (cutted for move)" oncommand="nbPaste()" image="image uri" tooltiptext="Paste for remove"/>
+</popup>
+
+
+
+<vbox flex="1">
+
+<hbox><!--tool-bar -->
+<toolbar id="toolbarid">
+<toolbarbutton  oncommand="goBack(1)" image="chrome://myapp/skin/images/arrow-left-white.png"
+          tooltiptext="return back to history" type="menu-button">
+         <menupopup  id="nbHist" onpopupshowing="nbUpdateHistoryMenu($$('nbHist'))">
+         </menupopup>
+</toolbarbutton>
+<toolbarbutton  oncommand="nbRefresh()" image="chrome://myapp/skin/images/refresh.png" tooltiptext="Refresh current node"  accesskey="r"/>
+<toolbarbutton  oncommand="nb.Save()" accesskey="s" acceltext="F2" image="chrome://myapp/skin/images/save.png" tooltiptext="save current changes"/>
+<toolbarbutton  oncommand="nbCalClick()" image="chrome://myapp/skin/images/cal31.png" type="menu-button">
+            <menupopup id="event-filter-menupopup" oncommand="alert('popup')">
+            <browser id="nbCal" src="chrome://myapp/content/nb/cal.htm"  flex="1"
+             style="width:220px;height:180px"/>
+             </menupopup>
+</toolbarbutton>
+<toolbaritem  image="chrome://myapp/skin/images/searchfind.png" type="menu-button">
+       <hbox><textbox id="SearchText" onkeyup="doSearch()" /></hbox>
+</toolbaritem>
+<toolbarbutton oncommand="$$('md').selectedIndex=1" image="chrome://myapp/skin/images/searchfind.png"/>
+<toolbarbutton  oncommand="nbSwapPages()" accesskey="e" acceltext="F6" image="chrome://myapp/skin/images/edit.png" tooltiptext="swap edit pages"/>
+
+    <!-- toolbarbuttons go here -->
+</toolbar>
+<datepicker value="2007/03/26" type="popup"/>
+
+</hbox>
+
+<spacer style="height:5px" />
+
+
+<hbox flex="1">
+    <!--
+<browser id="browserid" type="{content-primary | content}" src="chrome://myapp/content/sci.htm" flex="1"/>
+-->
+
+<deck id="md" persist="width">
+<tree id="tree" flex="1"  onclick="alert('clicked!')" context="treePopUp">
+    <treecols>
+      <treecol id="NAME" label="Название" primary="true" flex="1" />
+    </treecols>
+    <treechildren flex="1">
+
+        <treecell>
+            </treecell>
+        </treechildren>
+
+
+</tree>
+<vbox flex="1">
+<button oncommand="$$('md').selectedIndex=0">Close search</button>
+<tree id="SearchTree" flex="1" >
+        <treecols>
+        <treecol id="NAME" label="Документ" primary="true" flex="1" />
+        </treecols>
+        <treechildren flex="1"/>
+        </tree>
+</vbox>
+</deck>
+      <splitter collapse="before" ><grippy /></splitter>
+<!-- begins a content ... -->
+<tabbox id="editors" flex="1">
+<tabs>
+ <tab label="View"/>
+ <tab label="XUL"/>
+ <tab label="Source" selected="true"/>
+ <tab label="Property"/>
+</tabs>
+<tabpanels flex="1">
+<browser id="nbBrowse" src="chrome://myapp/content/nb/view.htm" flex="1"/>
+<iframe id="nbXul" flex="1"/>
+<textbox id="nbText" multiline="true" value="{default text}" flex="1" />
+<browser id="nbProp" flex="1"/>
+</tabpanels>
+</tabbox>
+
+
+
+
+
+
+
+</hbox>
+<statusbar>
+<statusbarpanel id="nbStatus" label="" flex="1"/>
+</statusbar>
+
+</vbox>
+
+<script>  <![CDATA[
+
+]]></script>
+
+</window>

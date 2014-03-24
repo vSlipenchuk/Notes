@@ -1,0 +1,35 @@
+<link type="text/css" rel="stylesheet" href="SyntaxHighlighter.css" />
+<link type="text/css" rel="stylesheet" href="viki.css" />
+<link type="text/css" rel="stylesheet" href="viki2.css" />
+
+<style>
+a {color:blue}
+</style>
+
+<script src=vs.js></script>
+<script src=viki.js></script>
+<script type="text/javascript" language="JavaScript"  src="sh_all.js"></script>
+
+<div id="text">
+    Notabene text...
+</div>
+
+<script>
+
+
+var p = window.parent;
+var v = p.Browser = document.getElementById('text');
+v.setViki = function (txt) {
+	if (txt.charAt(0)=='<') v.innerHTML=txt; // as is
+	else v.innerHTML = txt2html(txt,0); // No Includes...    
+    dp.SyntaxHighlighter.HighlightAll('code');
+    }
+    
+function vikiOnClick(a) { // Ёлемент, который кликнут!!!
+//alert('viki clicked!');
+//alert(a.innerHTML);
+if (v.onGo) v.onGo(a.innerHTML); // Whell???
+}
+
+//alert(p.Browser);
+</script>

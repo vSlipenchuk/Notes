@@ -1,0 +1,14 @@
+treechildren:-moz-tree-cell-text(red)
+{
+  color: red;
+}
+
+treechildren:-moz-tree-row(green)
+{
+  background-color: #A0FFA0;
+}
+
+treechildren:-moz-tree-cell-text(sorted)
+{
+  font-weight: bold;
+}

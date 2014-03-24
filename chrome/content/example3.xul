@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://myapp/content/example3.css" type="text/css"?>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    onload="onLoad()"
+    persist="screenX screenY width height sizemode"
+    title="treeView exaple" width="600" height="400"
+    >
+
+<script type="application/x-javascript" src="sqlite.js"/>
+<script type="application/x-javascript" src="chrome://myapp/content/vTree.js" />
+
+  <tree id="tree" flex="1">
+    <treecols>
+      <treecol id="selected" label="*" type="checkbox" />
+      <splitter class="tree-splitter"/>
+      <treecol id="NAME" label="Название" primary="true" flex="1" />
+      <splitter class="tree-splitter"/>
+      <treecol id="title" label="Путь" flex="1" />
+    </treecols>
+    <treechildren />
+  </tree>
+
+  <script type="application/x-javascript">
+  
+  <![CDATA[
+  // Русский текст приходится кодировать из-за https://bugzilla.mozilla.org/show_bug.cgi?id=241739
+  
+  var tv; // Global tree view variable
+  
+  function onLoad() {
+  //var w;
+  //alert('Yes!');
+  w = new vTree();
+  //alert('2');
+  
+  var data = [
+   { title: 'Перл', path: 'programming/perl', children: [
+        {title: 'Разное - \u0420\u0430\u0437\u043D\u043E\u0435', path: 'programming/perl/misc'},
+        {title: 'Детская - \u0414\u0435\u0442\u0441\u043A\u0430\u044F', path: 'programming/perl/nursery'}
+      ]},
+   {title: 'PHP', path: 'programming/php', selectedValue: true } ,
+   {title: 'Java', path: 'programming/java', properties: [w.greenAtom]},
+   {title: 'XUL/XPFE', path: 'programming/XUL', properties: [w.redAtom]},
+   {title: '\u0422\u0435\u043E\u0440\u0438\u044F \u0438 \u0430\u043B\u0433\u043E\u0440\u0438\u0442\u043C\u044B', path: 'programming/theory_algorithms'}
+        
+  ];
+  
+  w.setData(data,document.getElementById('tree')); // Assign a data
+  tv = w; // Remember a global
+  w.onSelect = function (item) {
+  //  alert('Hello from tree ctrl!, selected='+w.selected.title);
+    if (!item.loaded) {
+      //alert('reloading:'+item.title);
+      w.reloadChilds(item);
+      }
+    }
+  //alert('data='+data+'!');
+  //document.getElementById('tree').view = w; // Bind with view
+  // Теперь - инициализируемся из БД -))
+    //alert('Set a new db='+db+" for tv="+tv);
+    tv.setDb(db,"nb",0); // Set This for a db - clear all data???
+    //alert('loaded ok!');
+  }
+  
+  
+  
+    function removeSelected()
+    {
+      var tree = document.getElementById('tree');
+      var selection = tree.view.selection;
+      var rows = [];
+      for (var i = 0; i < selection.getRangeCount(); i++)
+      {
+        var min = {};
+        var max = {};
+        selection.getRangeAt(i, min, max);
+        for (var j = min.value; j <= max.value; j++)
+          rows.push(j);
+      }
+      rows.sort().reverse();
+      for (var n = 0; n < rows.length; n++)
+        tree.view.performActionOnRow('removeRow', rows[n]);
+    }
+    function clearData() { // Удаляем ВСЕ !
+      alert('clear all!');
+      var tree = document.getElementById('tree'),w;
+      alert('tree'+tree);
+      w = tree.ctrl;
+      alert('view='+w);
+      alert('v.setData='+w.setData);
+      alert('v.clearData='+w.clearData);
+      w.clearData();      
+    }
+    
+    
+    function addChild() {
+    var tree = document.getElementById('tree').ctrl;
+    tree.addChild(null,{title:'Hello',path:'ok'}); // Add root child...
+    }
+    
+    
+    
+  ]]>
+  
+  
+  </script>
+
+  <button label="Удалить отмеченные строки" oncommand="removeSelected()" />
+  <button label="Clear Data" oncommand="tv.clearData()" />
+  <button label="Add Child" oncommand="tv.addChild(null,{title:'Yes?',path:'???'})" />
+  <button label="dbReload" oncommand="tv.reloadChilds(null)" />
+
+</window>

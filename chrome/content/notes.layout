@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="nb.js" open="1" top="0" tabpos="2">
+		<Cursor position="2070" topLine="46" />
+	</File>
+	<File name="nb.xul" open="1" top="0" tabpos="1">
+		<Cursor position="4478" topLine="92" />
+	</File>
+	<File name="nb_xul.js" open="1" top="0" tabpos="4">
+		<Cursor position="2150" topLine="73" />
+	</File>
+	<File name="readme.txt" open="1" top="0" tabpos="3">
+		<Cursor position="1869" topLine="0" />
+	</File>
+	<File name="sqlite.js" open="1" top="0" tabpos="6">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="vs0.js" open="1" top="0" tabpos="5">
+		<Cursor position="6662" topLine="163" />
+	</File>
+	<File name="xulForms.js" open="1" top="1" tabpos="7">
+		<Cursor position="657" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

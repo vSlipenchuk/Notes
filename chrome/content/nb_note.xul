@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://myapp/content/example3.css" type="text/css"?>
+
+<window id="nb_note_window" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    onload="onLoadPage()"
+    persist="screenX screenY width height sizemode"    width="600" height="400"
+    >
+
+<script>
+
+function onLoadPage() {
+var par  = window.arguments[0];
+//  alert("I am loaded nbNote"+par.N);
+var nb = par.nb;
+par.win = window; // remember
+
+var note = par.note =  nb.GetNote(par.N);
+note.nb = nb;
+window.note = note;
+document.title=nb.GetFullPath( note.N );
+var ed = window.document.getElementById('nbText');
+ed.value=note.TXT;
+ed.readOnly=true;
+}
+
+function onSave() {
+//alert('onSave here win='+window);
+var note = window.note;
+var ed = window.document.getElementById('nbText');
+if (ed.readOnly) {
+   if (confirm("We are readonly, would like to go edit?") ) {
+        ed.readOnly = false;
+        ed.value = note.TXT;
+        }
+   return;
+   }
+//alert("begin note="+note);
+note.pTXT = note.TXT; note.TXT=ed.value; // correct text
+//alert("Try save");
+if ( note.nb.SaveNote( note )) {
+   // note.TXT = ed.value;
+   alert("Saved OK");
+   } else {
+   alert("Error save");
+   }
+//alert('window.note='+note);
+//var note = par.note;
+//alert('saving '+note.N);
+}
+
+</script>
+<keyset>
+<key keycode="VK_F2" oncommand="onSave()"/>
+<key keycode="S"  modifiers="control"  oncommand="onSave()" />
+
+</keyset>
+
+<textbox id="nbText" multiline="true" value="{default text}" flex="1"  />
+
+
+</window>

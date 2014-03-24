@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="application.ini" open="1" top="0" tabpos="8">
+		<Cursor position="879" topLine="0" />
+	</File>
+	<File name="chrome/content/main.xul" open="1" top="0" tabpos="10">
+		<Cursor position="512" topLine="3" />
+	</File>
+	<File name="chrome/content/nb.js" open="1" top="0" tabpos="4">
+		<Cursor position="696" topLine="0" />
+	</File>
+	<File name="chrome/content/nb.xul" open="1" top="0" tabpos="2">
+		<Cursor position="1416" topLine="130" />
+	</File>
+	<File name="chrome/content/nb_note.xul" open="1" top="1" tabpos="9">
+		<Cursor position="854" topLine="0" />
+	</File>
+	<File name="chrome/content/nb_xul.js" open="1" top="0" tabpos="1">
+		<Cursor position="3498" topLine="109" />
+	</File>
+	<File name="chrome/content/sqlite.js" open="1" top="0" tabpos="6">
+		<Cursor position="1138" topLine="24" />
+	</File>
+	<File name="chrome/content/vTree0.js" open="1" top="0" tabpos="5">
+		<Cursor position="13" topLine="0" />
+	</File>
+	<File name="chrome/content/vs0.js" open="1" top="0" tabpos="7">
+		<Cursor position="5646" topLine="0" />
+	</File>
+	<File name="readme.txt" open="1" top="0" tabpos="3">
+		<Cursor position="1174" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>
