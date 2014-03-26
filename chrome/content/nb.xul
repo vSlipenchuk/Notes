@@ -5,6 +5,7 @@
 
 <window id="nbWin2" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
     onload="onLoadPage()"
+    windowtype="xulmine"
     persist="screenX screenY width height sizemode"
     title="treeView exaple 2" width="600" height="400"
     >
@@ -17,7 +18,26 @@
 <script type="application/x-javascript" src="gcls.js"/>
 <script type="application/x-javascript" src="xulForms.js"/>
 
-<script>
+<script> <![CDATA[
+function nbCalMain() {
+var dat = new Date();
+    var y = dat.getFullYear();
+      var m = dat.getMonth();     // integer, 0..11
+      var d = dat.getDate();      // integer, 1..31
+      d=''+d;
+      if (d.length<2) d='0'+d;
+      m=''+(m+1); if (m.length<2) m='0'+m;
+      var str = y+'-'+m+'-'+d;
+      //if (window.parent.onSetDate)
+      //window.parent.
+      onSetDate(str);
+      //alert(str);
+      //id('caption').innerHTML=str;
+      //document.title='Êàëåíäàðü: '+str;
+      //id('viki').src='/nb/'+str; //+'?dt='+(new Date()+"&heads=
+//alert("Main!");
+
+}
 
 function nbOpenNewWindow() {
 //alert("I am here! LoadedN="+nb.N); // nb is a global variable
@@ -39,7 +59,8 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
 //par.win.title="Hello";
 }
 
-</script>
+
+]]></script>
 
 <keyset>
 <key keycode="VK_F2" oncommand="nbSave()"/>
@@ -73,7 +94,7 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
 </toolbarbutton>
 <toolbarbutton  oncommand="nbRefresh()" image="chrome://myapp/skin/images/refresh.png" tooltiptext="Refresh current node"  accesskey="r"/>
 <toolbarbutton  oncommand="nb.Save()" accesskey="s" acceltext="F2" image="chrome://myapp/skin/images/save.png" tooltiptext="save current changes"/>
-<toolbarbutton  oncommand="nbCalClick()" image="chrome://myapp/skin/images/cal31.png" type="menu-button">
+<toolbarbutton  oncommand="nbCalMain()" image="chrome://myapp/skin/images/cal31.png" type="menu-button">
             <menupopup id="event-filter-menupopup" oncommand="alert('popup')">
             <browser id="nbCal" src="chrome://myapp/content/nb/cal.htm"  flex="1"
              style="width:220px;height:180px"/>
