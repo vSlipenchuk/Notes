@@ -24,10 +24,11 @@ ed.value=note.TXT;
 ed.readOnly=true;
 }
 
-function onSave() {
+function onSave(key) {
 //alert('onSave here win='+window);
 var note = window.note;
 var ed = window.document.getElementById('nbText');
+
 if (ed.readOnly) {
    if (confirm("We are readonly, would like to go edit?") ) {
         ed.readOnly = false;
@@ -52,7 +53,7 @@ if ( note.nb.SaveNote( note )) {
 </script>
 <keyset>
 <key keycode="VK_F2" oncommand="onSave()"/>
-<key keycode="S"  modifiers="control"  oncommand="onSave()" />
+<key key="s"  modifiers="control"  oncommand="onSave(2)" />
 
 </keyset>
 

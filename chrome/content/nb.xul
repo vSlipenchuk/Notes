@@ -43,17 +43,18 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
 
 <keyset>
 <key keycode="VK_F2" oncommand="nbSave()"/>
-<key keycode="S"  modifiers="control"  oncommand="nbSave()" />
+<key key="s"  modifiers="control"  oncommand="nbSave()" />
 <key keycode="VK_F9" oncommand="nbOpenNewWindow()"/>
 
 <key keycode="VK_F5" oncommand="nbRefresh()"/>
-<key keycode="r"  modifiers="control" oncommand="nbRefresh()"/>
+<key key="r"  modifiers="control" oncommand="nbRefresh()"/>
 <key id="pageSwap" keycode="VK_F8"  oncommand="nbSwapPages()"/>
 </keyset>
 
 <popup id="treePopUp">
 <menuitem id="nbAddCh" label="Add child value" oncommand="nb.AddChild()" image="image uri" tooltiptext="Add a child"/>
 <menuitem  label="Rename this item" oncommand="nbRename()" image="image uri" tooltiptext="Rename me..."/>
+<menuitem  label="Open in new window" oncommand="nbOpenNewWindow()" image="image uri" tooltiptext="open new win F9"/>
 <menuseparator/>
 <menuitem  label="Cut (for move)" oncommand="nbCat()" image="image uri" tooltiptext="Cut for remove"/>
 <menuitem  label="Paste (cutted for move)" oncommand="nbPaste()" image="image uri" tooltiptext="Paste for remove"/>
