@@ -151,12 +151,16 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
  <tab label="XUL"/>
  <tab label="Source" selected="true"/>
  <tab label="Property"/>
+ <tab label="gCalendar"/>
+ <tab label="gContact"/>
 </tabs>
 <tabpanels flex="1">
 <browser id="nbBrowse" src="chrome://myapp/content/nb/view.htm" flex="1"/>
 <iframe id="nbXul" flex="1"/>
 <textbox id="nbText" multiline="true" value="{default text}" flex="1" />
 <browser id="nbProp" flex="1"/>
+<iframe id="gCalendar" src="https://www.google.com/calendar/render" type="content-primary" flex="1" />
+<iframe id="gContact" src="https://www.google.com/contacts/" type="content-primary" flex="1" />
 </tabpanels>
 </tabbox>
 
