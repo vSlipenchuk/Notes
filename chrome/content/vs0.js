@@ -179,6 +179,22 @@ function clearElement(el) { // Clear All Elements
     el.removeChild(el.firstChild);
 }
 
+function rowsAddNodes(rows,titles) {
+        var ti,tr,tc,ch,i;
+     ti = document.createElement('treeitem');
+     //ti.setAttribute("container",true); // Open-False?
+     tr = document.createElement('treerow'); ti.appendChild(tr);
+     ch = document.createElement('treechildren'); ti.appendChild(ch);
+     
+    for(i=0;i<titles.length;i++) {
+       tc = document.createElement('treecell');
+       tc.setAttribute('label',titles[i]);
+       tr.appendChild(tc);
+       }
+      rows.appendChild(ti); // Add a tree item
+    return ti; // Tree Item - back
+}
+
 function rowsAddNode(rows,title) {
         var ti,tr,tc,ch;
      ti = document.createElement('treeitem');

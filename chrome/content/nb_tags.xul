@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://myapp/content/example3.css" type="text/css"?>
+
+<window id="nb_tags_window" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    onload="onLoadPage()"
+    persist="screenX screenY width height sizemode"    width="600" height="400"
+    >
+<script type="application/x-javascript" src="nb.js"/>  
+<script type="application/x-javascript" src="vs0.js"/>  
+<script type="application/x-javascript" src="nb_xul.js"/>
+
+<script>
+
+
+ <![CDATA[
+
+var nb,P;
+
+
+function doSearch2(txt) {
+var ex,p=null;
+try {
+var tree = document.getElementById('SearchTree2');
+var rows = tree.getElementsByTagName('treechildren')[0];
+clearElement(rows);
+//txt = '%'+txt+'%';
+p = nb.Search(txt); // Must return a values
+if (!p) {
+    //window.title='NoResults:"'+txt+'"';
+    return 0;
+    }
+//window.title='Results: '+p.length;
+var i;
+for(i=0;i<p.length;i++) { // Все строки
+    var r = p[i],ti;
+	//for(j=1;j<r.length;j++) 
+    ti = rowsAddNodes(rows,r.slice(1)); // js0.vs; first column expected to be "N"
+    ti.N = r[0]; // Set N
+    }
+
+} catch(ex) {
+    alert('err:'+ex);
+}
+
+tree.onselect = function () {
+  //alert('onSelect?');
+  try {
+  var ti = treeSelected(tree);
+  if (!ti) return 0;
+  //alert('Selected:'+ti.N);
+  //alert('Selected:'+ti.N);
+  nb.Load(ti.N);
+//	  doLoad(ti.N);
+  } catch(ex) { alert(ex);}
+  }
+  
+}
+
+function onLoadPage() {
+var par  = window.arguments[0];
+P=par;
+nb = par.nb; // get it from params.
+ //alert("I am loaded nb_tags"+par);
+ //var rows = nb.Seacrh('%zuzuka%');
+ document.title=P.title;
+  doSearch2(par.tag);
+par.window = windows;
+//window.
+//document.title = 'par.title';
+alert('Ok, loaded:'+document.title);
+
+/*
+nb = par.nb;
+par.win = window; // remember
+
+var note = par.note =  nb.GetNote(par.N);
+note.nb = nb;
+window.note = note;
+document.title=nb.GetFullPath( note.N );
+var ed = window.document.getElementById('nbText');
+ed.value=note.TXT;
+ed.readOnly=true;
+*/
+}
+
+]]>
+</script>
+<keyset>
+<key keycode="VK_F2" oncommand="onSave()"/>
+<key key="s"  modifiers="control"  oncommand="onSave(2)" />
+
+</keyset>
+
+<tree id="SearchTree2" flex="1" >
+        <treecols>
+        <treecol id="NAME" label="Наименование" primary="true" flex="1" />
+	<treecol id="CREATED" label="Создан" primary="true" flex="1" />
+	</treecols>
+        <treechildren flex="1"/>
+</tree>
+
+<!--
+<textbox id="nbText" multiline="true" value="{default text}" flex="1"  />
+-->
+
+</window>

@@ -12,6 +12,38 @@ var w; // Global Tree Handler
 var nb; // inited in onLoadPage() and used everywhere
 
 
+ function doLoad(n) { // Temporarly - copy nb.Load here
+  var txt;
+	 //return nb.Load(n);
+	 
+  if (!nb.db.select('select n,txt,up,created from '+nb.tbl+' where n = '+n)) return false;
+  if (!nb.db.fetch()) return false;
+var db = nb.db;
+  nb.N = db.row[0]; nb.TextValue = txt =  db.row[1];  nb.UP=db.row[2]; nb.CREATED=db.row[3];
+  nb.addToHistory(n);
+  nb.prefSet(this.tbl,nb.history.join(',')); //?
+  
+   // now - update visual elements
+ //alert('?');
+	 
+  if (nb.Text) { // If have editor...
+     nb.Text.value = nb.TextValue;
+     nb.Text.N = nb.N;
+     }
+  //var ok = prefSet('Notabene.selected',n); //?
+  //ok2=this.prefGet('Notabene.history'); //?
+  //alert('ok='+ok+',ok2='+ok2);
+
+  if (nb.setStatus) nb.setStatus('loadDoc >>> :'+n+' created >>>>:'+nb.CREATED);
+  if (nb.setText) nb.setText(nb.TextValue);
+  //alert('Load:: begin Select path?')
+  if (nb.Tree) nb.Tree.selectPath(nb.Path(nb.N));
+  //alert('Load done Select Path :: LoadPath='+this.Path(this.N));
+  return true;
+  }
+
+
+
 function onSetDate(dat) {
     var n;
     try {
@@ -37,7 +69,7 @@ var txt = document.getElementById('SearchText').value;
 var tree = document.getElementById('SearchTree');
 var rows = tree.getElementsByTagName('treechildren')[0];
 clearElement(rows);
-txt = '%'+txt+'%';
+//txt = '%'+txt+'%';
 p = nb.Search(txt); // Must return a values
 if (!p) {
     //window.title='NoResults:"'+txt+'"';
@@ -45,9 +77,10 @@ if (!p) {
     }
 //window.title='Results: '+p.length;
 var i;
-for(i=0;i<p.length;i++) {
+for(i=0;i<p.length;i++) { // Все строки
     var r = p[i],ti;
-    ti = rowsAddNode(rows,r[1]);
+	//for(j=1;j<r.length;j++) 
+    ti = rowsAddNodes(rows,r.slice(1)); // js0.vs; first column expected to be "N"
     ti.N = r[0]; // Set N
     }
 
@@ -63,6 +96,7 @@ tree.onselect = function () {
   //alert('Selected:'+ti.N);
   //alert('Selected:'+ti.N);
   nb.Load(ti.N);
+//	  doLoad(ti.N);
   } catch(ex) { alert(ex);}
   }
 }
@@ -152,8 +186,9 @@ w.onSelect = function (row) {
     //window.title = nb.tbl+':/'+nb.FullName(row.N);
     //document.getElementById("nbWin2").setAttribute("title",window.title); // Это сложно, но работает
     document.title=app.dbfile+'('+nb.tbl+') '+nb.FullName(row.N);  // Замечательно!!! - тоже работает
-
-    nb.Load(row.N); // Reload ME???
+//alert("Loading"+row.N);
+    //nb.Load(row.N); // Reload ME???
+	    doLoad(row.N); //ZUZUKA
 } catch(ex) { alert('nberror:'+ex);}
     //alert('N='+row.N+' selected OK!');
    }

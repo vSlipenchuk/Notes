@@ -4,11 +4,11 @@
 	<File name="chrome/content/nb.js" open="1" top="0" tabpos="2">
 		<Cursor position="8748" topLine="254" />
 	</File>
-	<File name="chrome/content/nb.xul" open="1" top="1" tabpos="1">
-		<Cursor position="5680" topLine="151" />
+	<File name="chrome/content/nb.xul" open="1" top="0" tabpos="1">
+		<Cursor position="5923" topLine="148" />
 	</File>
-	<File name="chrome/content/nb_note.xul" open="1" top="0" tabpos="3">
-		<Cursor position="877" topLine="37" />
+	<File name="chrome/content/nb_note.xul" open="1" top="1" tabpos="3">
+		<Cursor position="1263" topLine="32" />
 	</File>
 	<File name="chrome/content/nb_xul.js" open="1" top="0" tabpos="5">
 		<Cursor position="0" topLine="9" />

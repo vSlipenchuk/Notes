@@ -81,6 +81,12 @@ var db = { // Global
     }
   // need to get columns???
   this.stmt = this.db.createStatement(sql);
+    for (var m = 1; m<arguments.length; m++) { // Add extra params...
+	        var arg = arguments[m];
+			//alert("bind: "+arg);
+			this.stmt.bindUTF8StringParameter(m-1, arg);
+		    }
+  ///ok = this.stmt.executeStep(); // ok,exec it...
   this.colCount = this.stmt.columnCount; // ok?
   //alert(this.colCount);
   this.cols=[];

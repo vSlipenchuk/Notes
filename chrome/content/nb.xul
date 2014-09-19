@@ -49,7 +49,7 @@ par.ok=0;
 par.nb = nb;
 //alert('showNB='+par);
 var w = window.openDialog("chrome://myapp/content/nb_note.xul",
-      "Notabene: N="+nb.N,
+      "Notabene: N2="+nb.N,
       "chrome, resizable, centerscreen, dialog",
       par);
 //alert("MyWindow="+w);
@@ -60,16 +60,86 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
 }
 
 
+function nbOpenNewTags0(title,tag) {
+//alert("I am here! LoadedN="+nb.N); // nb is a global variable
+var par={};
+par.db = db; // MyDefaultDatabase
+par.tbl='nb'; // My Table in it
+par.N=nb.N; // First Element = Load This Document
+par.tag=tag;
+par.ok=0;
+par.nb = nb;
+par.title=title;
+//alert('showNB='+par);
+var w = window.openDialog("chrome://myapp/content/nb_tags.xul",
+      title,
+      "chrome, resizable, centerscreen, dialog",
+      par);
+}
+
+function nbOpenNewTags() {
+nbOpenNewTags0('tags:todo','%todo%');
+}
+
+
+var txt="";
+
+function nbFindText(ask) {
+if (ask) {
+ var res = prompt('Find text on a page:',txt); if ( res ==  null) return; txt = res;
+ }
+ 
+if (txt == '') return;
+// Now need to find?
+//alert('Find:'+txt);
+var ed = document.getElementById('nbText'); // textbox
+
+var TXT = ed.value;
+var pos = ed.selectionStart + 1;
+TXT = TXT.substr(pos); // remove text before pos
+var has = TXT.indexOf( txt );
+if (has<0) {
+    // try circle
+    pos  = 0; TXT = ed.value;
+    has = TXT.indexOf( txt );
+    if (has<0) { 
+        alert('Text "'+ txt+'" not found in document...');
+        return ;
+	}
+  }
+// ok - found - need to set cursor here!
+
+pos = pos+has;
+
+ed.focus();
+//ed.selectionStart = pos; ed.selectionEnd= pos + txt.length;
+ed.setSelectionRange(pos,pos);
+//ed.ensureIndexIsVisible(pos);
+
+}
+
+function nbFindNotes() {
+var res = prompt('Find notes with text:','zuzuka');
+if (res == null) return;
+if (res == '') return;
+nbOpenNewTags0(res+' - find results ','%'+res+'%');
+txt = res; // 
+}
+
+
 ]]></script>
 
 <keyset>
 <key keycode="VK_F2" oncommand="nbSave()"/>
 <key key="s"  modifiers="control"  oncommand="nbSave()" />
 <key keycode="VK_F9" oncommand="nbOpenNewWindow()"/>
-
+<key keycode="VK_F8" oncommand="nbOpenNewTags()"/>
 <key keycode="VK_F5" oncommand="nbRefresh()"/>
-<key key="r"  modifiers="control" oncommand="nbRefresh()"/>
-<key id="pageSwap" keycode="VK_F8"  oncommand="nbSwapPages()"/>
+<key keycode="VK_F3" oncommand="nbFindText()"/>
+<key key="f"  modifiers="control" oncommand="nbFindText(true)"/>
+<key key="f"  modifiers="alt" oncommand="nbFindNotes(true)"/>
+<key key="r"  modifiers="control" oncommand="nbRefresh(false)"/>
+
 </keyset>
 
 <popup id="treePopUp">
@@ -79,6 +149,7 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
 <menuseparator/>
 <menuitem  label="Cut (for move)" oncommand="nbCat()" image="image uri" tooltiptext="Cut for remove"/>
 <menuitem  label="Paste (cutted for move)" oncommand="nbPaste()" image="image uri" tooltiptext="Paste for remove"/>
+<menuitem  label="Open is new window (F9)" oncommand="nbOpenNewWindow()" image="image uri" tooltiptext="Open new window"/>
 </popup>
 
 
@@ -101,14 +172,18 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
              </menupopup>
 </toolbarbutton>
 <toolbaritem  image="chrome://myapp/skin/images/searchfind.png" type="menu-button">
+<!--
        <hbox><textbox id="SearchText" onkeyup="doSearch()" /></hbox>
+-->
 </toolbaritem>
 <toolbarbutton oncommand="$$('md').selectedIndex=1" image="chrome://myapp/skin/images/searchfind.png"/>
 <toolbarbutton  oncommand="nbSwapPages()" accesskey="e" acceltext="F6" image="chrome://myapp/skin/images/edit.png" tooltiptext="swap edit pages"/>
 
     <!-- toolbarbuttons go here -->
 </toolbar>
+<!-- 
 <datepicker value="2007/03/26" type="popup"/>
+-->
 
 </hbox>
 
@@ -138,7 +213,8 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
 <tree id="SearchTree" flex="1" >
         <treecols>
         <treecol id="NAME" label="Документ" primary="true" flex="1" />
-        </treecols>
+	<treecol id="CREATED" label="Создан" primary="true" flex="1" />
+	</treecols>
         <treechildren flex="1"/>
         </tree>
 </vbox>
@@ -159,14 +235,10 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
 <iframe id="nbXul" flex="1"/>
 <textbox id="nbText" multiline="true" value="{default text}" flex="1" />
 <browser id="nbProp" flex="1"/>
-<iframe id="gCalendar" src="https://www.google.com/calendar/render" type="content-primary" flex="1" />
-<iframe id="gContact" src="https://www.google.com/contacts/" type="content-primary" flex="1" />
+<iframe id="gCalendar" src1="https://www.google.com/calendar/render" type="content-primary" flex="1" />
+<iframe id="gContact" src1="https://www.google.com/contacts/" type="content-primary" flex="1" />
 </tabpanels>
 </tabbox>
-
-
-
-
 
 
 

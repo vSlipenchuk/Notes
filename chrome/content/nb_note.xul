@@ -18,7 +18,7 @@ par.win = window; // remember
 var note = par.note =  nb.GetNote(par.N);
 note.nb = nb;
 window.note = note;
-document.title=nb.GetFullPath( note.N );
+document.title='>'+nb.GetFullPath( note.N );
 var ed = window.document.getElementById('nbText');
 ed.value=note.TXT;
 ed.readOnly=true;
@@ -41,7 +41,8 @@ note.pTXT = note.TXT; note.TXT=ed.value; // correct text
 //alert("Try save");
 if ( note.nb.SaveNote( note )) {
    // note.TXT = ed.value;
-   alert("Saved OK");
+   if (!key) key="undef";
+   alert("Saved OK "+key+"?");
    } else {
    alert("Error save");
    }

@@ -4,6 +4,11 @@
   таблица и точка входа (UP)... - далее все по сценарию -)))
   Класс - неудачный... Ибо - совмещает работу с БД и дерево представления (сделан для скорости был)
     При релоаде заваливает nb.Load !!!
+    
+    //  nb.js - это класс nb не связанный с конкретным окном или объектом отображения...
+    // nb.xul - главная форма с поиском и редакторами
+    // обработчики формы - nb_xul.js
+    
 */
 
 function Notabene(db,tbl,root) {
@@ -163,7 +168,7 @@ return true;
  },
  Search: function (txt) { // Search a text -->>
  var P=null; var max=30;
- if (!this.db.select('select N,NAME from '+this.tbl+' where txt like \''+txt+'\' order by N desc')) return 0;
+ if (!this.db.select('select N,NAME,CREATED from '+this.tbl+' where name like:1 or txt like :1 order by N desc',txt)) return 0;
  while(this.db.fetch()) {
    if (!P) P=[];
    P.push(this.db.row);
