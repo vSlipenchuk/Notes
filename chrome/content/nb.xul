@@ -59,6 +59,12 @@ var w = window.openDialog("chrome://myapp/content/nb_note.xul",
 //par.win.title="Hello";
 }
 
+function srvDrop() { // drop cache
+var os = Components. classes ["@mozilla.org/observer-service;1"]. getService (Components. interfaces. nsIObserverService);
+os. notifyObservers (null, "chrome-flush-caches", null);
+}
+
+
 
 function nbOpenNewTags0(title,tag) {
 //alert("I am here! LoadedN="+nb.N); // nb is a global variable
@@ -70,6 +76,7 @@ par.tag=tag;
 par.ok=0;
 par.nb = nb;
 par.title=title;
+srvDrop();
 //alert('showNB='+par);
 var w = window.openDialog("chrome://myapp/content/nb_tags.xul",
       title,
@@ -88,7 +95,7 @@ function nbFindText(ask) {
 if (ask) {
  var res = prompt('Find text on a page:',txt); if ( res ==  null) return; txt = res;
  }
- 
+
 if (txt == '') return;
 // Now need to find?
 //alert('Find:'+txt);
@@ -102,7 +109,7 @@ if (has<0) {
     // try circle
     pos  = 0; TXT = ed.value;
     has = TXT.indexOf( txt );
-    if (has<0) { 
+    if (has<0) {
         alert('Text "'+ txt+'" not found in document...');
         return ;
 	}
@@ -123,7 +130,7 @@ var res = prompt('Find notes with text:','zuzuka');
 if (res == null) return;
 if (res == '') return;
 nbOpenNewTags0(res+' - find results ','%'+res+'%');
-txt = res; // 
+txt = res; //
 }
 
 
@@ -181,7 +188,7 @@ txt = res; //
 
     <!-- toolbarbuttons go here -->
 </toolbar>
-<!-- 
+<!--
 <datepicker value="2007/03/26" type="popup"/>
 -->
 

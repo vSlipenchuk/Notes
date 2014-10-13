@@ -29,6 +29,7 @@
 		<Unit filename="chrome/content/nb.js" />
 		<Unit filename="chrome/content/nb.xul" />
 		<Unit filename="chrome/content/nb_note.xul" />
+		<Unit filename="chrome/content/nb_tags.xul" />
 		<Unit filename="chrome/content/nb_xul.js" />
 		<Unit filename="chrome/content/sqlite.js" />
 		<Unit filename="chrome/content/vTree0.js" />

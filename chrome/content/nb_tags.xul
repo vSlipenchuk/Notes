@@ -6,8 +6,8 @@
     onload="onLoadPage()"
     persist="screenX screenY width height sizemode"    width="600" height="400"
     >
-<script type="application/x-javascript" src="nb.js"/>  
-<script type="application/x-javascript" src="vs0.js"/>  
+<script type="application/x-javascript" src="nb.js"/>
+<script type="application/x-javascript" src="vs0.js"/>
 <script type="application/x-javascript" src="nb_xul.js"/>
 
 <script>
@@ -20,6 +20,7 @@ var nb,P;
 
 function doSearch2(txt) {
 var ex,p=null;
+//alert("S:"+txt);
 try {
 var tree = document.getElementById('SearchTree2');
 var rows = tree.getElementsByTagName('treechildren')[0];
@@ -34,7 +35,7 @@ if (!p) {
 var i;
 for(i=0;i<p.length;i++) { // Все строки
     var r = p[i],ti;
-	//for(j=1;j<r.length;j++) 
+	//for(j=1;j<r.length;j++)
     ti = rowsAddNodes(rows,r.slice(1)); // js0.vs; first column expected to be "N"
     ti.N = r[0]; // Set N
     }
@@ -42,6 +43,9 @@ for(i=0;i<p.length;i++) { // Все строки
 } catch(ex) {
     alert('err:'+ex);
 }
+
+var ed = document.getElementById('SearchText');
+if (ed) ed.value=txt;
 
 tree.onselect = function () {
   //alert('onSelect?');
@@ -54,14 +58,14 @@ tree.onselect = function () {
 //	  doLoad(ti.N);
   } catch(ex) { alert(ex);}
   }
-  
+
 }
 
 function onLoadPage() {
 var par  = window.arguments[0];
 P=par;
 nb = par.nb; // get it from params.
- //alert("I am loaded nb_tags"+par);
+ //alert("I am loaded nb_tags:"+par);
  //var rows = nb.Seacrh('%zuzuka%');
  document.title=P.title;
   doSearch2(par.tag);
@@ -84,13 +88,26 @@ ed.readOnly=true;
 */
 }
 
+function doUpdate() {
+var e = document.getElementById('SearchText').value;
+doSearch2(e);
+document.title=e+' -- search results';
+}
+
+function textKeyUp(event) {
+//alert("HERE"+event.keyCode+"!");
+if (event.keyCode==13)  doUpdate();
+}
+
 ]]>
 </script>
 <keyset>
-<key keycode="VK_F2" oncommand="onSave()"/>
+<key keycode="VK_ENTER" oncommand="doUpdate()"/>
 <key key="s"  modifiers="control"  oncommand="onSave(2)" />
 
 </keyset>
+
+<textbox id="SearchText" value="Hello" flex="0"  onkeyup="textKeyUp(event)"  />
 
 <tree id="SearchTree2" flex="1" >
         <treecols>
@@ -99,6 +116,9 @@ ed.readOnly=true;
 	</treecols>
         <treechildren flex="1"/>
 </tree>
+
+
+
 
 <!--
 <textbox id="nbText" multiline="true" value="{default text}" flex="1"  />
