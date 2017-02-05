@@ -2,6 +2,10 @@
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://myapp/content/example3.css" type="text/css"?>
 
+<!--
+     it is main window
+-->
+
 
 <window id="nbWin2" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
     onload="onLoadPage()"
@@ -66,7 +70,7 @@ os. notifyObservers (null, "chrome-flush-caches", null);
 
 
 
-function nbOpenNewTags0(title,tag) {
+function nbOpenNewTags0(title,tag) { // open new search form. tag must be in a parameter...
 //alert("I am here! LoadedN="+nb.N); // nb is a global variable
 var par={};
 par.db = db; // MyDefaultDatabase
@@ -125,11 +129,11 @@ ed.setSelectionRange(pos,pos);
 
 }
 
-function nbFindNotes() {
+function nbFindNotes() { // at last calls nbSearch2()
 var res = prompt('Find notes with text:','zuzuka');
 if (res == null) return;
 if (res == '') return;
-nbOpenNewTags0(res+' - find results ','%'+res+'%');
+nbOpenNewTags0(res+' - find results ',res);
 txt = res; //
 }
 

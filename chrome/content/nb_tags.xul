@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://myapp/content/example3.css" type="text/css"?>
+<!--
+  This is search form -> doSearch(txt) - is a main function
+-->
 
 <window id="nb_tags_window" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
     onload="onLoadPage()"
@@ -18,15 +21,61 @@
 var nb,P;
 
 
+function nbOpenNewWindowN(N) { // loads in a new window
+var par={};
+par.tbl='nb'; // My Table in it
+par.N=N; // First Element = Load This Document
+par.ok=0;
+par.nb = nb;
+par.nb.db = nb.db; // default db - get it from nb
+var w = window.openDialog("chrome://myapp/content/nb_note.xul",
+      "Notabene: N2="+N,
+      "chrome, resizable, centerscreen, dialog",
+      par);
+}
+
+function nbOpenInline(N) { // open inline editor
+var id=document.getElementById('NoteText');
+var noteText = nb.GetNote(N).TXT;
+id.value = noteText;
+id.readOnly = true;
+id.enabled = false;
+	
+var searchText = document.getElementById('SearchText').value;
+var pos  = noteText.toUpperCase().indexOf(searchText.toUpperCase()); // case in-sensitive
+if (pos>=0) {
+  //id.selectionStart=pos;  id.selectionEnd=pos+searchText.length;
+  id.setSelectionRange(pos,pos+searchText.length);
+  //alert('OK');
+  }
+}
+
+function nbOpenNewWindow(mode) {
+ var tree = document.getElementById('SearchTree2');
+  var ti = treeSelected(tree);
+  if (!ti) return 0;
+  //alert('Selected:'+ti.N);
+  if (mode==0) nbOpenNewWindowN(ti.N); // loads in new window
+  if (mode==1) nb.Load(ti.N); // Loads in main window
+  //  nbOpenInline(ti.N);
+}
+
+function onTreeDblClick(event) {
+	 alert("DblClick");
+}
+
+
 function doSearch2(txt) {
 var ex,p=null;
 //alert("S:"+txt);
+document.getElementById('NoteText').value=""; // clear loaded text
 try {
 var tree = document.getElementById('SearchTree2');
 var rows = tree.getElementsByTagName('treechildren')[0];
+var max = parseInt(document.getElementById('limitResults').value,30);
 clearElement(rows);
 //txt = '%'+txt+'%';
-p = nb.Search(txt); // Must return a values
+p = nb.Search('%'+txt+'%',max); // Must return a values
 if (!p) {
     //window.title='NoResults:"'+txt+'"';
     return 0;
@@ -47,14 +96,17 @@ for(i=0;i<p.length;i++) { // Все строки
 var ed = document.getElementById('SearchText');
 if (ed) ed.value=txt;
 
+
+
 tree.onselect = function () {
   //alert('onSelect?');
   try {
   var ti = treeSelected(tree);
   if (!ti) return 0;
   //alert('Selected:'+ti.N);
-  //alert('Selected:'+ti.N);
-  nb.Load(ti.N);
+   //nbOpenNewWindowN(ti.N);
+  //nb.Load(ti.N); // Loads in main window
+   nbOpenInline(ti.N);
 //	  doLoad(ti.N);
   } catch(ex) { alert(ex);}
   }
@@ -104,18 +156,39 @@ if (event.keyCode==13)  doUpdate();
 <keyset>
 <key keycode="VK_ENTER" oncommand="doUpdate()"/>
 <key key="s"  modifiers="control"  oncommand="onSave(2)" />
-
+<key key="s"  modifiers="control"  oncommand="onSave(2)" />
+<key keycode="VK_F9" oncommand="nbOpenNewWindow(0)"/>
+<key keycode="VK_F5" oncommand="nbOpenNewWindow(1)"/>
 </keyset>
 
-<textbox id="SearchText" value="Hello" flex="0"  onkeyup="textKeyUp(event)"  />
+<popup id="treePopUp">
+<menuitem id="nbAddCh" label="Add child value" oncommand="nb.AddChild()" image="image uri" tooltiptext="Add a child"/>
+<menuitem  label="Rename this item" oncommand="nbRename()" image="image uri" tooltiptext="Rename me..."/>
+<menuitem  label="Open in new window" oncommand="nbOpenNewWindow()" image="image uri" tooltiptext="open new win F9"/>
+<menuseparator/>
+<menuitem  label="Cut (for move)" oncommand="nbCat()" image="image uri" tooltiptext="Cut for remove"/>
+<menuitem  label="Paste (cutted for move)" oncommand="nbPaste()" image="image uri" tooltiptext="Paste for remove"/>
+<menuitem  label="Open is new window (F9)" oncommand="nbOpenNewWindow()" image="image uri" tooltiptext="Open new window"/>
+</popup>
 
-<tree id="SearchTree2" flex="1" >
+<vbox flex="1">
+<hbox flex="0">
+<textbox id="SearchText" value="Hello" flex="1"  onkeyup="textKeyUp(event)"  />
+<textbox id="limitResults" value="100" flex="0"  onkeyup="textKeyUp(event)"  />
+</hbox>
+
+<tree id="SearchTree2" flex="1">
         <treecols>
         <treecol id="NAME" label="Наименование" primary="true" flex="1" />
 	<treecol id="CREATED" label="Создан" primary="true" flex="1" />
 	</treecols>
         <treechildren flex="1"/>
 </tree>
+
+<splitter collapse="before" ><grippy /></splitter>
+
+<textbox id="NoteText" flex="1" multiline="true"/>
+</vbox>
 
 
 

@@ -5,22 +5,22 @@
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="chrome/content/main.xul" open="1" top="0" tabpos="11">
-		<Cursor position="0" topLine="53" />
+		<Cursor position="2378" topLine="0" />
 	</File>
 	<File name="chrome/content/nb.js" open="1" top="0" tabpos="2">
 		<Cursor position="8748" topLine="254" />
 	</File>
 	<File name="chrome/content/nb.xul" open="1" top="0" tabpos="1">
-		<Cursor position="2424" topLine="59" />
+		<Cursor position="3963" topLine="138" />
 	</File>
-	<File name="chrome/content/nb_note.xul" open="1" top="0" tabpos="3">
-		<Cursor position="1263" topLine="35" />
+	<File name="chrome/content/nb_note.xul" open="1" top="1" tabpos="3">
+		<Cursor position="1313" topLine="0" />
 	</File>
-	<File name="chrome/content/nb_tags.xul" open="1" top="1" tabpos="8">
-		<Cursor position="2339" topLine="85" />
+	<File name="chrome/content/nb_tags.xul" open="1" top="0" tabpos="8">
+		<Cursor position="1537" topLine="30" />
 	</File>
 	<File name="chrome/content/nb_xul.js" open="1" top="0" tabpos="5">
-		<Cursor position="0" topLine="0" />
+		<Cursor position="13" topLine="0" />
 	</File>
 	<File name="chrome/content/sqlite.js" open="1" top="0" tabpos="4">
 		<Cursor position="80" topLine="0" />

@@ -42,7 +42,7 @@ note.pTXT = note.TXT; note.TXT=ed.value; // correct text
 if ( note.nb.SaveNote( note )) {
    // note.TXT = ed.value;
    if (!key) key="undef";
-   alert("Saved OK "+key+"?");
+   //alert("Saved OK "+key+"?");
    } else {
    alert("Error save");
    }

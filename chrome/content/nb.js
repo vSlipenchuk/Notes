@@ -27,7 +27,7 @@ if (this.db.select('select N,UP,NAME from '+this.tbl)) return true;
   if (!confirm("Table "+this.tbl+" does not exist, create?")) return false;
   }
 try {
-this.db.execSQL('create table '+this.tbl+'(N integer primary key,UP integer default 0,name varchar(80),txt varchar(2000))');
+this.db.execSQL('create table '+this.tbl+'(N integer primary key,UP integer default 0,NAME varchar(80),TXT varchar(2000),CREATED datetime)');
 this.db.execSQL('create unique index i_'+this.tbl+' on '+this.tbl+'(UP,NAME)');
 this.db.execSQL('insert into '+this.tbl+'(N,UP,NAME,TXT) values(100,0,\'root\',\'\')');
 } catch(ex) {
@@ -166,8 +166,8 @@ return true;
  rename:function (N,NewName) {
  this.db.execSQL('update '+this.tbl+' set name=\''+NewName+'\' where N='+N);
  },
- Search: function (txt) { // Search a text -->>
- var P=null; var max=30;
+ Search: function (txt,max) { // Search a text -->>
+ var P=null; if (!max) max=30;
  if (!this.db.select('select N,NAME,CREATED from '+this.tbl+' where name like:1 or txt like :1 order by N desc',txt)) return 0;
  while(this.db.fetch()) {
    if (!P) P=[];
