@@ -187,6 +187,24 @@ return true;
  //alert('P='+P);
  return P;
  },
+ getChildsText:function(N) {
+	 var Text='';
+	 //alert('now N='+N);
+	var i=0, ch = this.getChildNodes(N); // get array of nodes
+	 //alert('ch='+ch);
+	 for(i=0;i<ch.length;i++) { // N,NAME array
+		 var n=ch[i][0];
+		 //alert(n);
+		 var name=this.GetFullPath(n);
+		 //alert(name);
+	         if (!this.db.select('select txt from '+this.tbl+' where n = '+n)) return false;
+                 if (!this.db.fetch()) return false;
+                 text = db.row[0];
+		 //alert(text);
+		 Text+='=='+name+'\n'+text+'\n';
+     }
+   return Text;  
+ },
  FullName:function (N) { // Gets path array for an N
  var Name = '';
  while(1) {

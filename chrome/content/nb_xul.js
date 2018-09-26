@@ -246,6 +246,55 @@ nbToMove = nb.N;
 nb.setStatus('Node:'+nbToMove+' remembered for moving');
 }
 
+function clipSetText(text) {
+	const gClipboardHelper = Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper);
+gClipboardHelper.copyString(text);
+}
+
+
+function str2file(output, savefile) {
+
+    /*try {
+        netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+    } catch (e) {
+        alert("Permission to save file was denied.");
+    }*/
+    var file = Components.classes["@mozilla.org/file/local;1"]
+        .createInstance(Components.interfaces.nsILocalFile);
+    file.initWithPath( savefile );
+    if ( file.exists() == false ) {
+        //alert( "File Updated Successfully ");
+        file.create( Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 420 );
+    }
+    var outputStream = Components.classes["@mozilla.org/network/file-output-stream;1"]
+        .createInstance( Components.interfaces.nsIFileOutputStream );
+    outputStream.init( file, 0x04 | 0x08 | 0x20, 420, 0 );
+    //var result = outputStream.write( output, output.length );
+    
+    var converter = Components.classes["@mozilla.org/intl/converter-output-stream;1"].
+                    createInstance(Components.interfaces.nsIConverterOutputStream);
+    converter.init(outputStream, "UTF-8", 0, 0);
+    converter.writeString(output);
+    converter.close(); // this closes foStream
+    
+    outputStream.close();
+//alert( "File Updated Successfully ");
+//clear();
+//reload();
+}
+
+function nbGetChildsAsList() { // get all text for childs
+nbTreeToMove = w.selectedParent();
+//nb.getChildsAsList(nbToMove);
+var t = nb.getChildsText(nb.N);
+	//alert(t);
+clipSetText(t); // save to clipboard
+var name = nb.GetFullPath(nb.N);
+name = '/tmp/'+name.split('/').join('_')+'.txt';
+str2file(t,name); 
+nb.setStatus('Node:'+nb.N+' got child text '+t.length+' placed to clipboard and file='+name );	
+}
+
 function nbPaste() {
 var nbNewParent = nb.N;
 if (!nbToMove) return;

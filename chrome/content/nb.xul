@@ -23,6 +23,15 @@
 <script type="application/x-javascript" src="xulForms.js"/>
 
 <script> <![CDATA[
+
+/*
+var cmdLine = window.arguments[0];
+cmdLine = cmdLine.QueryInterface(Components.interfaces.nsICommandLine);
+//alert(cmdLine);
+alert(cmdLine.handleFlagWithParam("test", false)); // if called with "-test testParam" returns testParam, or null
+*/
+
+
 function nbCalMain() {
 var dat = new Date();
     var y = dat.getFullYear();
@@ -157,6 +166,7 @@ txt = res; //
 <menuitem id="nbAddCh" label="Add child value" oncommand="nb.AddChild()" image="image uri" tooltiptext="Add a child"/>
 <menuitem  label="Rename this item" oncommand="nbRename()" image="image uri" tooltiptext="Rename me..."/>
 <menuitem  label="Open in new window" oncommand="nbOpenNewWindow()" image="image uri" tooltiptext="open new win F9"/>
+<menuitem  label="Get Childs as List" oncommand="nbGetChildsAsList()" image="image uri" tooltiptext="open...."/>
 <menuseparator/>
 <menuitem  label="Cut (for move)" oncommand="nbCat()" image="image uri" tooltiptext="Cut for remove"/>
 <menuitem  label="Paste (cutted for move)" oncommand="nbPaste()" image="image uri" tooltiptext="Paste for remove"/>

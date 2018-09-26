@@ -6,14 +6,14 @@
 
 [Directories,2]
 0,/home/xul/Notes/components
-1,/usr/lib/xulrunner-1.9.2.19/components
+1,/usr/lib64/xulrunner-1.9.2.17/components
 
 [Files,5]
 0,ISciMoz.xpt,0,52797,1395680578000
 1,ISciDoc.xpt,0,2741,1395680578000
 2,ISciMozEvents.xpt,0,733,1395680578000
 3,ISciMozController.xpt,0,205,1395680578000
-4,xulrunner.xpt,1,358181,1321200375000
+4,xulrunner.xpt,1,358181,1305297506000
 
 [ArchiveItems,0]
 

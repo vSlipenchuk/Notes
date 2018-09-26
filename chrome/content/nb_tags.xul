@@ -165,6 +165,8 @@ if (event.keyCode==13)  doUpdate();
 <menuitem id="nbAddCh" label="Add child value" oncommand="nb.AddChild()" image="image uri" tooltiptext="Add a child"/>
 <menuitem  label="Rename this item" oncommand="nbRename()" image="image uri" tooltiptext="Rename me..."/>
 <menuitem  label="Open in new window" oncommand="nbOpenNewWindow()" image="image uri" tooltiptext="open new win F9"/>
+<menuitem  label="Get Childs as List" oncommand="nbGetChildsAsList()" image="image uri" tooltiptext="open...."/>
+
 <menuseparator/>
 <menuitem  label="Cut (for move)" oncommand="nbCat()" image="image uri" tooltiptext="Cut for remove"/>
 <menuitem  label="Paste (cutted for move)" oncommand="nbPaste()" image="image uri" tooltiptext="Paste for remove"/>
